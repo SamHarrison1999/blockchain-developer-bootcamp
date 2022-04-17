@@ -70,11 +70,11 @@ export const loadAllOrders = async (exchange, dispatch) => {
   const tradeStream = await exchange.getPastEvents('Trade', { fromBlock: 0, toBlock: 'latest' })
   // Format filled orders
   const filledOrders = tradeStream.map((event) => event.returnValues)
-  // Add filled orders to the redux store
+  // Add cancelled orders to the redux store
   dispatch(filledOrdersLoaded(filledOrders))
 
-  // Fetch orders with the "Order" event stream
-  const orderStream = await exchange.getPastEvents('Order', { fromBlock: 0, toBlock: 'latest' })
+  // Load order stream
+  const orderStream = await exchange.getPastEvents('Order', { fromBlock: 0,  toBlock: 'latest' })
   // Format order stream
   const allOrders = orderStream.map((event) => event.returnValues)
   // Add open orders to the redux store
